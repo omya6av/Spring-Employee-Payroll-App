@@ -3,6 +3,7 @@ package com.employee.controller;
 import com.employee.dto.EmployeeDTO;
 import com.employee.model.Employee;
 import com.employee.repository.EmployeeRepository;
+import com.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,67 +15,45 @@ import java.util.Optional;
 @RequestMapping("/employee")
 public class EmployeeController {
 
+    //UC4
+    @Autowired
+    private EmployeeService employeeService;
+
     //UC1  // UC2  //UC3
     // GET all employees
-    @GetMapping
+    @GetMapping("/all")
     public List<Employee> getEmployees() {
-        return employeeRepository.findAll();
+        return employeeService.getAllEmployees();
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
-        Optional<Employee> employee = employeeRepository.findById(id);
-
-        // If employee is found, return the employee data with HTTP 200 OK
-        if (employee.isPresent()) {
-            return ResponseEntity.ok(employee.get());
-        } else {
-            //if not found
-            return ResponseEntity.notFound().build();
-        }
+    public Optional<Employee> getEmployeeById(@PathVariable Long id) {
+       return employeeService.getEmployeeById(id);
     }
 
     //    Add new employee
     @PostMapping("/create")
-    public Employee CreateEmployee(@RequestBody Employee employee) {
-        return employeeRepository.save(employee);
+    public Employee createEmployee(@RequestBody Employee employee) {
+        return employeeService.createEmployee(employee);
     }
 
     @PostMapping("/createDto")
     public Employee CreateEmployeeDto(@RequestBody EmployeeDTO employeeDTO) {
         Employee employee = new Employee(employeeDTO.getName(), "Default role ", employeeDTO.getSalary());
-        return employeeRepository.save(employee);
+        return employeeService.createEmployee(employee);
     }
 
     // PUT - Update an existing employee
     @PutMapping("/update/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
-        return employeeRepository.findById(id).map(employee -> {
-            employee.setName(updatedEmployee.getName());
-            employee.setRole(updatedEmployee.getRole());
-            employee.setSalary(updatedEmployee.getSalary());
-            return ResponseEntity.ok(employeeRepository.save(employee));
-        }).orElseGet(() -> ResponseEntity.notFound().build());
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
+        return employeeService.updateEmployee(id, updatedEmployee);
     }
 
     // DELETE - Remove an employee
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
-        if (employeeRepository.existsById((id))) {
-            employeeRepository.deleteById(id);
-            return ResponseEntity.ok("Employee with ID " + id + " deleted successfully.");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    //UC2
-    @Autowired
-    private final EmployeeRepository employeeRepository;
-
-    //constructor based dependency injection
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public String deleteEmployee(@PathVariable Long id) {
+         employeeService.deleteEmployee(id);
+         return "Employee deleted successfully!";
     }
 
 

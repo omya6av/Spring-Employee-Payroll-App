@@ -9,7 +9,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String role; // Changed from salary to role
+    private String role;
     private double salary;
 
     public Employee() {}
