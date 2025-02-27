@@ -10,10 +10,12 @@ public class Employee {
     private Long id;
     private String name;
     private String role; // Changed from salary to role
+    private double salary;
 
     public Employee() {}
 
-    public Employee(String name, String role) {
+    public Employee(String name, String role, double salary) {
+        this.salary = salary;
         this.name = name;
         this.role = role;
     }
@@ -25,4 +27,12 @@ public class Employee {
 
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
 }
