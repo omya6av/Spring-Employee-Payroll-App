@@ -11,7 +11,8 @@ public class Employee {
     private String name;
     private double salary;
 
-    public Employee() {}
+    public Employee() {
+    }
 
     public Employee(String name, double salary) {
         this.salary = salary;
@@ -21,10 +22,18 @@ public class Employee {
     public void setId(Long id) {
         this.id = id;
     }
-    public Long getId() { return id; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public double getSalary() {
         return salary;
@@ -33,7 +42,6 @@ public class Employee {
     public void setSalary(double salary) {
         this.salary = salary;
     }
-
 
 
 }
