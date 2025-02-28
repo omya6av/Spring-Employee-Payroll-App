@@ -9,24 +9,22 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String role;
     private double salary;
 
     public Employee() {}
 
-    public Employee(String name, String role, double salary) {
+    public Employee(String name, double salary) {
         this.salary = salary;
         this.name = name;
-        this.role = role;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
     public Long getId() { return id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
 
     public double getSalary() {
         return salary;
@@ -35,4 +33,7 @@ public class Employee {
     public void setSalary(double salary) {
         this.salary = salary;
     }
+
+
+
 }

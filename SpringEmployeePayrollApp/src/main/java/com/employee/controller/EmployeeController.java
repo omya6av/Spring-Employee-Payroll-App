@@ -39,7 +39,7 @@ public class EmployeeController {
 
     @PostMapping("/createDto")
     public Employee CreateEmployeeDto(@RequestBody EmployeeDTO employeeDTO) {
-        Employee employee = new Employee(employeeDTO.getName(), "Default role ", employeeDTO.getSalary());
+        Employee employee = new Employee(employeeDTO.getName(), employeeDTO.getSalary());
         return employeeService.createEmployee(employee);
     }
 
@@ -53,7 +53,7 @@ public class EmployeeController {
     @DeleteMapping("/delete/{id}")
     public String deleteEmployee(@PathVariable Long id) {
          employeeService.deleteEmployee(id);
-         return "Employee deleted successfully!";
+         return "Employee "+id +" deleted successfully!";
     }
 
 
