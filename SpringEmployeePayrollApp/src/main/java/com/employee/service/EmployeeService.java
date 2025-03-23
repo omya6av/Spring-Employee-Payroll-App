@@ -1,6 +1,7 @@
 package com.employee.service;
 
 
+import com.employee.exceptionhandler.EmployeeNotFoundException;
 import com.employee.model.Employee;
 import com.employee.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,8 @@ public class EmployeeService {
 
     public Optional<Employee> getEmployeeById(Long id) {
         log.info("Fetching employee with ID {}", id);
-        return employeeList.stream().filter(employee -> employee.getId().equals(id)).findFirst();
+        return Optional.ofNullable(employeeList.stream().filter(employee -> employee.getId().equals(id))
+                .findFirst().orElseThrow(() -> new EmployeeNotFoundException(("Employee with ID " + id + " not found!"))));
     }
 
     //update
