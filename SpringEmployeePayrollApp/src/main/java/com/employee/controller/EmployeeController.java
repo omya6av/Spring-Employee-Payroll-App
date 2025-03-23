@@ -4,6 +4,7 @@ import com.employee.dto.EmployeeDTO;
 import com.employee.model.Employee;
 import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,13 +38,13 @@ public class EmployeeController {
 
     //    Add new employee
     @PostMapping("/create")
-    public Employee createEmployee(@RequestBody Employee employee) {
+    public Employee createEmployee( @RequestBody Employee employee) {
         log.info("POST Request: Creating employee with data {}", employee);
         return employeeService.createEmployee(employee);
     }
 
     @PostMapping("/createDto")
-    public Employee CreateEmployeeDto(@RequestBody EmployeeDTO employeeDTO) {
+    public Employee CreateEmployeeDto(@Valid @RequestBody EmployeeDTO employeeDTO) {
         log.info("POST Request: Creating employee DTO with data {}", employeeDTO);
         Employee employee = new Employee(employeeDTO.getName(), employeeDTO.getSalary());
         return employeeService.createEmployee(employee);
