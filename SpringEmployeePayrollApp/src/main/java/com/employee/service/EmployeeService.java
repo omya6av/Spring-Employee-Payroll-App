@@ -26,6 +26,7 @@ public class EmployeeService {
     private final List<Employee> employeeList = new ArrayList<>();
 
     public Employee createEmployee(Employee employee) {
+        log.info("Creating a new employee: {}", employee);
         long newId = employeeList.isEmpty() ? 1 : employeeList.get(employeeList.size() - 1).getId() + 1;
         employee.setId(newId);
         employeeList.add(employee);
@@ -34,15 +35,18 @@ public class EmployeeService {
 
 
     public List<Employee> getAllEmployees() {
+        log.info("Fetching all employees from database");
         return employeeList;
     }
 
     public Optional<Employee> getEmployeeById(Long id) {
+        log.info("Fetching employee with ID {}", id);
         return employeeList.stream().filter(employee -> employee.getId().equals(id)).findFirst();
     }
 
     //update
     public Employee updateEmployee(Long id, Employee updatedEmployee) {
+        log.info("Updating employee with ID {}", id);
         Optional<Employee> existingEmployee = getEmployeeById(id);
         if (existingEmployee.isPresent()) {
             Employee employee = existingEmployee.get();
@@ -50,11 +54,14 @@ public class EmployeeService {
             employee.setSalary(updatedEmployee.getSalary());
             return employee;
         } else {
+            log.error("Employee with ID {} not found for update", id);
             throw new RuntimeException("Employee not found");
         }
     }
 
     public void deleteEmployee(Long id) {
-   employeeList.removeIf(employee -> employee.getId().equals(id));
+        log.info("Deleting employee with ID {}", id);
+        employeeList.removeIf(employee -> employee.getId().equals(id));
+        log.info("Employee deleted successfully");
     }
 }
