@@ -38,7 +38,7 @@ public class EmployeeController {
 
     //    Add new employee
     @PostMapping("/create")
-    public Employee createEmployee( @RequestBody Employee employee) {
+    public Employee createEmployee(@RequestBody Employee employee) {
         log.info("POST Request: Creating employee with data {}", employee);
         return employeeService.createEmployee(employee);
     }
